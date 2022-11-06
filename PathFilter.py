@@ -27,6 +27,8 @@ class PathFilter(object):
 
         ret = []
         for path in sorted(glob.glob(osp.join(base_path, "*.npy"))):
+            ret.append(path)
+        for path in sorted(glob.glob(osp.join(base_path, "*.pkl"))):
             #filename = path.split("/")[-1].replace(".pkl", "")
             #d_genre, d_type, _, _, m_id, _, _ = filename.split("_")
             #m_id = m_id[-1]
