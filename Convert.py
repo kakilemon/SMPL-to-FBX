@@ -12,6 +12,7 @@ from FbxReadWriter import FbxReadWrite
 from SmplObject import SmplObjects
 import argparse
 import tqdm
+import sys
 
 def getArg():
     parser = argparse.ArgumentParser()
@@ -34,6 +35,8 @@ if __name__ == "__main__":
             fbxReadWrite.addAnimation(pkl_name, smpl_params)
             fbxReadWrite.writeFbx(output_base, pkl_name)
         except Exception as e:
+            tb = sys.exc_info()[2]
+            print("message:{0}".format(e.with_traceback(tb)))
             fbxReadWrite.destroy()
             print ("- - Destroy")
             raise e
