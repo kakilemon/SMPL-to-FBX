@@ -47,10 +47,22 @@ class SmplObjects(object):
         paths = PathFilter.filter(read_path, dance_genres=None,  dance_types=None, music_IDs=None)
         for path in paths:
             filename = path.split("/")[-1]
-            with open(path, "rb") as fp:
-                data = pickle.load(fp)
-            self.files[filename] = {"smpl_poses":data["smpl_poses"],
-                                    "smpl_trans":data["smpl_trans"]}
+            if filename.endswith(".npy"):
+                with open(path, 'rb') as f:
+                    data = np.load(f)
+                    data = np.array(data)  # (N, 225)
+                    f.close()
+                trans = data[:, 6:9]
+                poses = data[:, 9:]
+                poses = R.from_matrix(poses.reshape(-1, 3, 3)).as_rotvec().reshape(-1, 72)
+
+                self.files[filename] = {"smpl_poses": poses,
+                                    "smpl_trans": trans}
+            else:
+                with open(path, "rb") as fp:
+                    data = pickle.load(fp)
+                self.files[filename] = {"smpl_poses":data["smpl_poses"],
+                                        "smpl_trans":data["smpl_trans"]}
         self.keys = [key for key in self.files.keys()]
 
     def __len__(self):
