@@ -35,7 +35,7 @@ if __name__ == "__main__":
             fbxReadWrite.writeFbx(output_base, pkl_name)
         except Exception as e:
             fbxReadWrite.destroy()
-            print ("- - Distroy")
+            print ("- - Destroy")
             raise e
         finally:
             fbxReadWrite.destroy()
