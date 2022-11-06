@@ -26,7 +26,7 @@ class PathFilter(object):
         print (music_IDs)
 
         ret = []
-        for path in sorted(glob.glob(osp.join(base_path, "*.pkl"))):
+        for path in sorted(glob.glob(osp.join(base_path, "*.npy"))):
             #filename = path.split("/")[-1].replace(".pkl", "")
             #d_genre, d_type, _, _, m_id, _, _ = filename.split("_")
             #m_id = m_id[-1]
